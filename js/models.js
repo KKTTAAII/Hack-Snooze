@@ -79,7 +79,7 @@ class StoryList {
       url: `${BASE_URL}/stories`,
       method: "POST",
       data: {
-        token: user.token,
+        token: user.loginToken,
         story: 
           {title: newStory.title,
           author: newStory.author,
