@@ -52,10 +52,15 @@ function putStoriesOnPage() {
 }
 
 async function submitNewStory(){
+  console.debug("submitNewStory");
+  evt.preventDefault();
+  console.log('clicked')
   const submittedAuthor = $('#author').value();
   const submittedTitle = $('#title').value();
   const submittedUrl = $('#url').value();
   let newStory = await storyList.addStory(currentUser,
     {title: submittedTitle, author: submittedAuthor, url: submittedUrl});
-  storyList.stories.push(newStory);
+  putStoriesOnPage();
 }
+
+$newStoryForm.on("submit", submitNewStory);
