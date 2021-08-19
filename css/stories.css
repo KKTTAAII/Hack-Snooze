@@ -37,3 +37,8 @@
 .story-user {
   display: block;
 }
+
+
+.fillBackground {
+  background-color: rgb(65, 64, 64);
+}

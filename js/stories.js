@@ -25,6 +25,9 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        <span class="star">
+          <i class="fa-star far"></i>
+        </span>  
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -51,16 +54,30 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-async function submitNewStory(){
+async function submitNewStory(evt){
   console.debug("submitNewStory");
   evt.preventDefault();
-  console.log('clicked')
-  const submittedAuthor = $('#author').value();
-  const submittedTitle = $('#title').value();
-  const submittedUrl = $('#url').value();
+  const submittedAuthor = $('#author').val();
+  const submittedTitle = $('#title').val();
+  const submittedUrl = $('#url').val();
+  
   let newStory = await storyList.addStory(currentUser,
     {title: submittedTitle, author: submittedAuthor, url: submittedUrl});
-  putStoriesOnPage();
+  let newListOfStory = generateStoryMarkup(newStory);
+  $newStoryForm.hide('slow');
+  $signupForm.hide();
+  $allStoriesList.prepend(newListOfStory);
+
+  $('#author').val('');
+  $('#title').val('');
+  $('#url').val('');
 }
 
 $newStoryForm.on("submit", submitNewStory);
+
+function toggleFavorites(evt){
+  console.debug("toggleFavorites");
+  const target = $(evt.target);
+  target.toggleClass("fillBackground");
+}
+
