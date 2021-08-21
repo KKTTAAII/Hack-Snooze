@@ -14,10 +14,10 @@ const $newStoryForm = $("#submit-form");
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
-const $navSubmit = $('#nav-submitStory');
+const $navSubmit = $("#nav-submitStory");
+const $navFav = $("#nav-favorites");
 const $navOptionsBar = $("#nav-loggedin-options");
-
-const $favStar = $('.star');
+const $hackSnooze = $("#nav-all");
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -25,12 +25,8 @@ const $favStar = $('.star');
  */
 
 function hidePageComponents() {
-  const components = [
-    $allStoriesList,
-    $loginForm,
-    $signupForm,
-  ];
-  components.forEach(c => c.hide());
+  const components = [$allStoriesList, $loginForm, $signupForm];
+  components.forEach((c) => c.hide());
 }
 
 /** Overall function to kick off the app. */
@@ -43,13 +39,35 @@ async function start() {
   await getAndShowStoriesOnStart();
 
   // if we got a logged-in user
-  if (currentUser) updateUIOnUserLogin();
+  if (currentUser) {
+    updateUIOnUserLogin();
+    $(".star").show();
+  } else {
+    $(".star").hide();
+  }
 }
 
+function checkForFav() {
+  const $lis = $("li");
+  if (currentUser.favorites[0]) {
+    for (let li of $lis) {
+      for (let fav of currentUser.favorites) {
+        if (li.id === fav.storyId) {
+          const span = li.children;
+          const i = span[0].children;
+          i[0].classList.remove("far");
+          i[0].classList.add("fas");
+        }
+      }
+    }
+  }
+}
 // Once the DOM is entirely loaded, begin the app
 
-console.warn("HEY STUDENT: This program sends many debug messages to" +
-  " the console. If you don't see the message 'start' below this, you're not" +
-  " seeing those helpful debug messages. In your browser console, click on" +
-  " menu 'Default Levels' and add Verbose");
+console.warn(
+  "HEY STUDENT: This program sends many debug messages to" +
+    " the console. If you don't see the message 'start' below this, you're not" +
+    " seeing those helpful debug messages. In your browser console, click on" +
+    " menu 'Default Levels' and add Verbose"
+);
 $(start);

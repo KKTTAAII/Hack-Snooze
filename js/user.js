@@ -94,6 +94,7 @@ async function checkForRememberedUser() {
 function saveUserCredentialsInLocalStorage() {
   console.debug("saveUserCredentialsInLocalStorage");
   if (currentUser) {
+    $(".star").show();
     localStorage.setItem("token", currentUser.loginToken);
     localStorage.setItem("username", currentUser.username);
   }
@@ -114,6 +115,8 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
   $allStoriesList.show();
+
+  checkForFav();
 
   updateNavOnLogin();
 }

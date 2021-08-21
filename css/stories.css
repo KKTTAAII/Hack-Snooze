@@ -39,6 +39,10 @@
 }
 
 
-.fillBackground {
-  background-color: rgb(65, 64, 64);
+.fa-star {
+  cursor: pointer;
+}
+
+.favStarBG {
+  color: rgb(65, 64, 64);
 }

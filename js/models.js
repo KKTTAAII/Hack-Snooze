@@ -24,7 +24,9 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    const url = this.url;
+    let name = new URL(url);
+    return name.hostname;
   }
 }
 
@@ -63,6 +65,8 @@ class StoryList {
     // build an instance of our own class using the new array of stories
     return new StoryList(stories);
   }
+
+  async getFavorite() {}
 
   /** Adds story data to API, makes a Story instance, adds it to story list.
    * - user - the current instance of User who will post the story
@@ -220,12 +224,10 @@ class User {
     });
 
     //add to fav array
-    const favorite = response.favorites[0];
-      this.favorites.push(favorite);
-    return this.favorites;
-
+    const favorite = response.data.user.favorites;
+    this.favorites = favorite;
+    return favorite;
   }
-
 
   async removeFavorite(storyId, username) {
     const response = await axios({
@@ -237,10 +239,8 @@ class User {
     });
 
     //remove from fav array
-    const favorite = response.favorites[0];
-    this.favorites.filter(function(story){
-        return story.storyId !== favorite.storyId;
-      }
-    )
+    const favorite = response.data.user.favorites;
+    this.favorites = favorite;
+    return favorite;
   }
 }
