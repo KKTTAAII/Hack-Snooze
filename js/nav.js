@@ -10,12 +10,12 @@ function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
   putStoriesOnPage();
-  if(currentUser){
+  if (currentUser) {
     $newStoryForm.hide();
     $myStoriesList.hide();
     $favList.hide();
-      checkForFav();
-    }  
+    checkForFav();
+  }
   $allStoriesList.show();
 }
 
@@ -51,7 +51,7 @@ function navSubmitNewStoryClick(evt) {
   $newStoryForm.show();
   $newStoryForm.insertBefore($allStoriesList);
   $allStoriesList.show();
-  $('.trash-can').hide();
+  $(".trash-can").hide();
 }
 
 $navSubmit.on("click", navSubmitNewStoryClick);
@@ -64,18 +64,22 @@ function favoritesClick(evt) {
   $favList.empty();
 
   const userFavorites = currentUser.favorites;
+  if (userFavorites.length < 1) {
+    $($favList).append("<p> No favorites added yet </p>");
+  } else {
     for (let fav of userFavorites) {
-      let favStory = generateStoryMarkup(fav);
+      let favStory = generateStoryMarkup(new Story(fav));
       $favList.append(favStory);
       checkForFav();
     }
-  
+  }
+
   $favList.show();
 }
 
 $navFav.on("click", favoritesClick);
 
-function myStoriesClick(evt){
+function myStoriesClick(evt) {
   console.debug("myStoriesClick", evt);
   $allStoriesList.hide();
   $favList.hide();
@@ -83,15 +87,21 @@ function myStoriesClick(evt){
   $myStoriesList.empty();
 
   const userStories = currentUser.ownStories;
-  for (let story of userStories) {
-    let myStory = generateStoryMarkup(story);
-    $myStoriesList.prepend(myStory);
-  }
 
+  if (userStories.length < 1) {
+    $($myStoriesList).append("<p> No stories added yet </p>");
+  } else {
+    for (let story of userStories) {
+      let myStory = generateStoryMarkup(story);
+      $myStoriesList.prepend(myStory);
+    }
+  }
+  
   checkForFav();
-  const stars = $('.star');
-  $(trashIcon).insertBefore('.star');
+  const stars = $(".star");
+  $(trashIcon).insertBefore(".star");
   $myStoriesList.show();
 }
 
-$myStories.on('click', myStoriesClick)
+$myStories.on("click", myStoriesClick);
+
