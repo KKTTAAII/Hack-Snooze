@@ -6,6 +6,8 @@ const $body = $("body");
 
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
+const $favList = $("#favorite-stories-list");
+const $myStoriesList = $("#my-stories-list")
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
@@ -18,6 +20,9 @@ const $navSubmit = $("#nav-submitStory");
 const $navFav = $("#nav-favorites");
 const $navOptionsBar = $("#nav-loggedin-options");
 const $hackSnooze = $("#nav-all");
+const $myStories = $('#nav-my-stories');
+
+const trashIcon = '<span class="trash-can"><i class="fas fa-trash-alt"></i></span>';
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After

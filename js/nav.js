@@ -39,8 +39,10 @@ function updateNavOnLogin() {
 function navSubmitNewStoryClick(evt) {
   console.debug("navSubmitNewStoryClick", evt);
   $loginForm.hide();
+  $favList.hide();
   $newStoryForm.show();
   $newStoryForm.insertBefore($allStoriesList);
+  $allStoriesList.show();
 }
 
 $navSubmit.on("click", navSubmitNewStoryClick);
@@ -52,17 +54,41 @@ function favoritesClick(evt) {
   for (let fav of userFavorites) {
     let favStory = generateStoryMarkup(new Story(fav));
     $allStoriesList.append(favStory);
-
     checkForFav();
     $newStoryForm.hide();
+    $allStoriesList.show();
+    $myStoriesList.hide();
   }
 }
 
 $navFav.on("click", favoritesClick);
 
-function hackSnoozeClick() {
-  const components = [$loginForm, $signupForm, $newStoryForm];
-  components.forEach((c) => c.hide());
+function hackSnoozeClick(evt) {
+  console.debug("hackSnoozeClick", evt);
+  $newStoryForm.hide();
+  if(currentUser){
+    checkForFav();
+  }
 }
 
 $hackSnooze.on("click", hackSnoozeClick);
+
+function myStoriesClick(evt){
+  console.debug("myStoriesClick", evt);
+  $allStoriesList.hide();
+  $myStoriesList.show();
+  const userStories = currentUser.ownStories;
+  console.log(userStories);
+  for (let story of userStories) {
+    console.log(story)
+    let myStory = generateStoryMarkup(new Story(story));
+    $allStoriesList.hide();
+    $myStoriesList.empty();
+    $myStoriesList.prepend(myStory);
+    const stars = $('.star');
+    stars.prepend(trashIcon);
+  }
+  
+}
+
+$myStories.on('click', myStoriesClick)

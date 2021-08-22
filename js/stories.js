@@ -57,6 +57,7 @@ function putStoriesOnPage() {
 async function submitNewStory(evt) {
   console.debug("submitNewStory");
   evt.preventDefault();
+
   const submittedAuthor = $("#author").val();
   const submittedTitle = $("#title").val();
   const submittedUrl = $("#url").val();
@@ -66,6 +67,7 @@ async function submitNewStory(evt) {
     author: submittedAuthor,
     url: submittedUrl,
   });
+
   let newListOfStory = generateStoryMarkup(newStory);
   $newStoryForm.hide("slow");
   $signupForm.hide();
