@@ -1,6 +1,7 @@
 "use strict";
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
+const DELETE_URL = "https://private-anon-5022fdbd4d-hackorsnoozev3.apiary-proxy.com/stories/";
 
 /******************************************************************************
  * Story: a single story in the system
@@ -243,4 +244,16 @@ class User {
     this.favorites = favorite;
     return favorite;
   }
+
+  async deleteStory(storyId){
+    const response = await axios({
+      url: `${DELETE_URL}/${storyId}`,
+      method: "DELETE",
+      data: {
+        token: this.loginToken,
+      },
+    });
+  }
+
+  
 }

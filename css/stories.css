@@ -39,7 +39,7 @@
 }
 
 
-.fa-star {
+.fa-star, .fa-trash-alt {
   cursor: pointer;
 }
 

@@ -96,3 +96,27 @@ async function toggleFavorites(evt) {
 }
 
 $("ol").on("click", ".fa-star", toggleFavorites);
+
+async function removeStory(evt){
+  console.debug("removeStory");
+  const target = $(evt.target);
+  const liOfThatTarget = target.closest("li");
+  const storyId = liOfThatTarget[0].id;
+  const myStories = currentUser.ownStories
+
+  for (let i=0; i<myStories.length; i++) {
+    if (storyId === myStories[i].storyId){
+      liOfThatTarget.remove();
+      myStories.splice(i, 1)
+    }
+  }
+
+  for (let i=0; i<storyList.stories.length; i++) {
+    if (storyId === storyList.stories[i].storyId){
+      storyList.stories.splice(i, 1);
+      await currentUser.deleteStory(storyList.stories[i].storyId);
+    }
+  }
+}
+
+$("ol").on("click", ".trash-can", removeStory);
