@@ -59,9 +59,11 @@ function checkForFav() {
       for (let fav of currentUser.favorites) {
         if (li.id === fav.storyId) {
           const span = li.children;
+          console.log(span);
           const i = span[0].children;
           i[0].classList.remove("far");
           i[0].classList.add("fas");
+          console.log(i[0])
         }
       }
     }

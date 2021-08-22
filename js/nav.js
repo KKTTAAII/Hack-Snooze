@@ -10,6 +10,12 @@ function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
   putStoriesOnPage();
+  if(currentUser){
+    $newStoryForm.hide();
+    $myStoriesList.hide();
+    $favList.hide();
+      checkForFav();
+    }
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -40,55 +46,50 @@ function navSubmitNewStoryClick(evt) {
   console.debug("navSubmitNewStoryClick", evt);
   $loginForm.hide();
   $favList.hide();
+  $myStoriesList.hide();
   $newStoryForm.show();
   $newStoryForm.insertBefore($allStoriesList);
   $allStoriesList.show();
+  $('.trash-can').hide();
 }
 
 $navSubmit.on("click", navSubmitNewStoryClick);
 
 function favoritesClick(evt) {
   console.debug("favoritesClick", evt);
-  $allStoriesList.children().hide();
+  $allStoriesList.hide();
+  $newStoryForm.hide();
+  $myStoriesList.hide();
+  $favList.empty();
+
   const userFavorites = currentUser.favorites;
   for (let fav of userFavorites) {
     let favStory = generateStoryMarkup(new Story(fav));
-    $allStoriesList.append(favStory);
+    $favList.append(favStory);
     checkForFav();
-    $newStoryForm.hide();
-    $allStoriesList.show();
-    $myStoriesList.hide();
   }
+  $favList.show();
 }
 
 $navFav.on("click", favoritesClick);
 
-function hackSnoozeClick(evt) {
-  console.debug("hackSnoozeClick", evt);
-  $newStoryForm.hide();
-  if(currentUser){
-    checkForFav();
-  }
-}
-
-$hackSnooze.on("click", hackSnoozeClick);
-
 function myStoriesClick(evt){
   console.debug("myStoriesClick", evt);
   $allStoriesList.hide();
+  $favList.hide();
+  $newStoryForm.hide();
+  
   $myStoriesList.show();
+  $myStoriesList.empty();
+
   const userStories = currentUser.ownStories;
-  console.log(userStories);
   for (let story of userStories) {
-    console.log(story)
     let myStory = generateStoryMarkup(new Story(story));
-    $allStoriesList.hide();
-    $myStoriesList.empty();
     $myStoriesList.prepend(myStory);
-    const stars = $('.star');
-    stars.prepend(trashIcon);
   }
   
+  const stars = $('.star');
+  $(trashIcon).insertBefore('.star');
 }
 
 $myStories.on('click', myStoriesClick)

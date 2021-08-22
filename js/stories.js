@@ -95,4 +95,4 @@ async function toggleFavorites(evt) {
   }
 }
 
-$("ol").on("click", "li", "i", toggleFavorites);
+$("ol").on("click", ".fa-star", toggleFavorites);
