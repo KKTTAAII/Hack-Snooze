@@ -8,7 +8,6 @@ let storyList;
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
-
   putStoriesOnPage();
 }
 
@@ -73,6 +72,9 @@ async function submitNewStory(evt) {
   $signupForm.hide();
   $allStoriesList.prepend(newListOfStory);
 
+  currentUser.ownStories.push(newStory);
+  storyList.stories.unshift(newStory);
+
   $("#author").val("");
   $("#title").val("");
   $("#url").val("");
@@ -104,6 +106,7 @@ async function removeStory(evt){
   const storyId = liOfThatTarget[0].id;
   const myStories = currentUser.ownStories
 
+
   for (let i=0; i<myStories.length; i++) {
     if (storyId === myStories[i].storyId){
       liOfThatTarget.remove();
@@ -113,8 +116,8 @@ async function removeStory(evt){
 
   for (let i=0; i<storyList.stories.length; i++) {
     if (storyId === storyList.stories[i].storyId){
-      storyList.stories.splice(i, 1);
       await currentUser.deleteStory(storyList.stories[i].storyId);
+      storyList.stories.splice(i, 1); 
     }
   }
 }

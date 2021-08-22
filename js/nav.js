@@ -15,7 +15,8 @@ function navAllStories(evt) {
     $myStoriesList.hide();
     $favList.hide();
       checkForFav();
-    }
+    }  
+  $allStoriesList.show();
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -63,11 +64,12 @@ function favoritesClick(evt) {
   $favList.empty();
 
   const userFavorites = currentUser.favorites;
-  for (let fav of userFavorites) {
-    let favStory = generateStoryMarkup(new Story(fav));
-    $favList.append(favStory);
-    checkForFav();
-  }
+    for (let fav of userFavorites) {
+      let favStory = generateStoryMarkup(fav);
+      $favList.append(favStory);
+      checkForFav();
+    }
+  
   $favList.show();
 }
 
@@ -78,18 +80,18 @@ function myStoriesClick(evt){
   $allStoriesList.hide();
   $favList.hide();
   $newStoryForm.hide();
-  
-  $myStoriesList.show();
   $myStoriesList.empty();
 
   const userStories = currentUser.ownStories;
   for (let story of userStories) {
-    let myStory = generateStoryMarkup(new Story(story));
+    let myStory = generateStoryMarkup(story);
     $myStoriesList.prepend(myStory);
   }
-  
+
+  checkForFav();
   const stars = $('.star');
   $(trashIcon).insertBefore('.star');
+  $myStoriesList.show();
 }
 
 $myStories.on('click', myStoriesClick)

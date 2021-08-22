@@ -159,7 +159,6 @@ class User {
   }
 
   /** Login in user with API, make User instance & return it.
-
    * - username: an existing user's username
    * - password: an existing user's password
    */
