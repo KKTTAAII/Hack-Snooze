@@ -1,22 +1,12 @@
 "use strict";
 
-// This is the global list of the stories, an instance of StoryList
 let storyList;
-
-/** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
   putStoriesOnPage();
 }
-
-/**
- * A render method to render HTML for an individual Story instance
- * - story: an instance of Story
- *
- * Returns the markup for the story.
- */
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
@@ -38,14 +28,11 @@ function generateStoryMarkup(story) {
     `);
 }
 
-/** Gets list of stories from server, generates their HTML, and puts on page. */
-
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
 
   $allStoriesList.empty();
 
-  // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
@@ -91,33 +78,38 @@ async function toggleFavorites(evt) {
   const storyId = liOfThatTarget[0].id;
 
   if (target.hasClass("fas")) {
-    let added = await currentUser.addFavortie(storyId, currentUser.name);
+    let added = await currentUser.addFavortie(
+      storyId, 
+      currentUser.username
+    );
   } else {
-    let deleted = await currentUser.removeFavorite(storyId, currentUser.name);
+    let deleted = await currentUser.removeFavorite(
+      storyId,
+      currentUser.username
+    );
   }
 }
 
 $("ol").on("click", ".fa-star", toggleFavorites);
 
-async function removeStory(evt){
+async function removeStory(evt) {
   console.debug("removeStory");
   const target = $(evt.target);
   const liOfThatTarget = target.closest("li");
   const storyId = liOfThatTarget[0].id;
-  const myStories = currentUser.ownStories
+  const myStories = currentUser.ownStories;
 
-
-  for (let i=0; i<myStories.length; i++) {
-    if (storyId === myStories[i].storyId){
+  for (let i = 0; i < myStories.length; i++) {
+    if (storyId === myStories[i].storyId) {
       liOfThatTarget.remove();
-      myStories.splice(i, 1)
+      myStories.splice(i, 1);
     }
   }
 
-  for (let i=0; i<storyList.stories.length; i++) {
-    if (storyId === storyList.stories[i].storyId){
+  for (let i = 0; i < storyList.stories.length; i++) {
+    if (storyId === storyList.stories[i].storyId) {
       await currentUser.deleteStory(storyList.stories[i].storyId);
-      storyList.stories.splice(i, 1); 
+      storyList.stories.splice(i, 1);
     }
   }
 }

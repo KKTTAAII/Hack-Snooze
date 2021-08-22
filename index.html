@@ -31,7 +31,7 @@
   </head>
 
   <body>
-    <!-- top navigation bar -->
+    
     <nav>
       <div class="navbar-brand">
         <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
@@ -51,19 +51,23 @@
       </div>
     </nav>
 
-    <!-- area for stories (all stories, user stories, favorites) -->
+    
     <section class="stories-container container">
-      <!-- loading message (removed by JS after stories loaded) -->
+      
       <div id="stories-loading-msg">Loading&hellip;</div>
 
-      <!-- List of all stories -->
       <ol id="all-stories-list" class="stories-list"></ol>
-      <ol id="favorite-stories-list" class="stories-list" style="display: none;"></ol>
-      <ol id="my-stories-list" class="stories-list" style="display: none;"></ol>
+      <ol
+        id="favorite-stories-list"
+        class="stories-list"
+        style="display: none"
+      ></ol>
+      <ol id="my-stories-list" class="stories-list" style="display: none"></ol>
 
     </section>
 
     <section class="submit-newStory-form-container container">
+
       <form action="#" id="submit-form" class="hidden" method="post">
         <div class="author-input">
           <label for="author">author</label>
@@ -84,9 +88,7 @@
       <hr />
     </section>
 
-    <!-- Login and signup forms -->
     <section class="account-forms-container container">
-      <!-- Login form -->
       <form
         action="#"
         id="login-form"
@@ -110,7 +112,6 @@
         <hr />
       </form>
 
-      <!-- Signup form -->
       <form
         action="#"
         id="signup-form"
@@ -137,8 +138,7 @@
         <button type="submit">create account</button>
       </form>
     </section>
-
-    <!-- Library JS & our JS -->
+    
     <script src="https://unpkg.com/jquery"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
 

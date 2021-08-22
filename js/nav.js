@@ -1,16 +1,11 @@
 "use strict";
 
-/******************************************************************************
- * Handling navbar clicks and updating navbar
- */
-
-/** Show main list of all stories when click site name */
-
 function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
   putStoriesOnPage();
   if (currentUser) {
+    $(".username-section-container").hide();
     $newStoryForm.hide();
     $myStoriesList.hide();
     $favList.hide();
@@ -21,8 +16,6 @@ function navAllStories(evt) {
 
 $body.on("click", "#nav-all", navAllStories);
 
-/** Show login/signup on click on "login" */
-
 function navLoginClick(evt) {
   console.debug("navLoginClick", evt);
   hidePageComponents();
@@ -32,7 +25,6 @@ function navLoginClick(evt) {
 
 $navLogin.on("click", navLoginClick);
 
-/** When a user first logins in, update the navbar to reflect that. */
 
 function updateNavOnLogin() {
   console.debug("updateNavOnLogin");
@@ -45,6 +37,7 @@ function updateNavOnLogin() {
 
 function navSubmitNewStoryClick(evt) {
   console.debug("navSubmitNewStoryClick", evt);
+  $(".username-section-container").hide();
   $loginForm.hide();
   $favList.hide();
   $myStoriesList.hide();
@@ -56,8 +49,11 @@ function navSubmitNewStoryClick(evt) {
 
 $navSubmit.on("click", navSubmitNewStoryClick);
 
-function favoritesClick(evt) {
+
+
+function navFavoritesClick(evt) {
   console.debug("favoritesClick", evt);
+  $(".username-section-container").hide();
   $allStoriesList.hide();
   $newStoryForm.hide();
   $myStoriesList.hide();
@@ -77,10 +73,13 @@ function favoritesClick(evt) {
   $favList.show();
 }
 
-$navFav.on("click", favoritesClick);
+$navFav.on("click", navFavoritesClick);
 
-function myStoriesClick(evt) {
+
+
+function navMyStoriesClick(evt) {
   console.debug("myStoriesClick", evt);
+  $(".username-section-container").hide();
   $allStoriesList.hide();
   $favList.hide();
   $newStoryForm.hide();
@@ -96,12 +95,44 @@ function myStoriesClick(evt) {
       $myStoriesList.prepend(myStory);
     }
   }
-  
+
   checkForFav();
   const stars = $(".star");
   $(trashIcon).insertBefore(".star");
   $myStoriesList.show();
 }
 
-$myStories.on("click", myStoriesClick);
+$navMyStories.on("click", navMyStoriesClick);
 
+
+
+function navUsername(evt) {
+  console.debug("navUsername", evt);
+  hidePageComponents();
+  $newStoryForm.hide();
+  $favList.hide();
+  $myStoriesList.hide();
+  $(".username-section-container").empty();
+  $body.append(`
+  <section class="username-section-container container">
+  <div class="profile-container">
+    <h4 class="header">User Profile Info</h4>
+    <section>
+     <div class="info" id="name">
+      Name:
+      <span>${currentUser.name}</span>
+     </div>
+     <div class="info" id="username">
+      Username:
+      <span>${currentUser.username}</span>
+     </div>
+     <div class="info" id="account date">
+      Account Created:
+      <span>${currentUser.createdAt}</span>
+     </div>
+    </section> 
+  </div>  
+  </section>`);
+}
+
+$navUsername.on("click", navUsername);

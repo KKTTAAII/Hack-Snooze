@@ -1,4 +1,4 @@
-/* Navigation bar */
+
 
 nav {
   display: flex;
@@ -20,4 +20,14 @@ nav {
 .nav-right {
   margin-left: auto;
   text-align: right;
+}
+
+.header {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.info {
+  font-size: .8em;
+  margin-bottom: 5px;
 }
